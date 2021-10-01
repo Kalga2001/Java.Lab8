@@ -1,0 +1,119 @@
+package com.company;
+import java.util.Scanner;
+
+class Employee
+{
+    private String firstName;
+    private String lastName;
+    private String socialSecurityNumber;
+    public Employee(String firstName,String lastName,String socialSecurityNumber)
+    {
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.socialSecurityNumber=socialSecurityNumber;
+    }
+
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public String getSocialSecurityNumber()
+    {
+        return socialSecurityNumber;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("First_name: "+firstName+"\n"+"Last_name: "+lastName+"\n"+"SocialSecurityNumber: "+socialSecurityNumber);
+    }
+}
+
+class HourlyEmployee extends Employee
+{
+    private double hours_pay;
+    private double count_hours;
+    private double wage;
+    public HourlyEmployee(String firstName, String lastName,
+String socialSecurityNumber, double hours_pay,
+ double count_hours) {
+        super(firstName, lastName, socialSecurityNumber);
+        if (hours_pay < 0.0)
+            throw new IllegalArgumentException("Hours_pay must be >= 0.0");
+
+        if (count_hours <= 0.0 || count_hours>= 168)
+            throw new IllegalArgumentException(
+                    "Count hours must be > 0.0 and < 168");
+
+        this.count_hours = count_hours;
+        this.hours_pay = hours_pay;
+
+    }
+
+   public void setHours_pay(double hours_pay)
+   {
+       this.hours_pay=hours_pay;
+   }
+
+    public double getHours_pay()
+    {
+        return hours_pay;
+    }
+
+    public void setCount_hours(double count_hours)
+    {
+        this.count_hours=count_hours;
+    }
+
+    public double getCount_hours()
+    {
+        return count_hours;
+    }
+
+
+       public void setWage()
+       {
+          this.wage=wage;
+       }
+
+       public double getWage()
+       {
+           if(count_hours<40) {
+               wage = count_hours * hours_pay;
+           }
+           if(count_hours>=40)
+           {
+               double result=count_hours*hours_pay;
+               double r=(count_hours-40)*1.5;
+               r=r*hours_pay;
+               wage=result+r;
+           }
+
+           return wage;
+       }
+
+         @Override
+ public String toString()
+    {
+    return String.format(super.toString()+"\n"+
+           "Hours_pay: "+getHours_pay()+"\n"+"Count_hours: "+getCount_hours()+"\n"+"Wage: "+getWage());
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+HourlyEmployee emp=new HourlyEmployee("Vlad","Klimov","333-33-33",10,12);
+System.out.println(emp.toString());
+        System.out.println("=========================================");
+emp.setCount_hours(41);
+        System.out.println(emp.toString());
+    }
+}
+
